@@ -1,13 +1,16 @@
+import os
+
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QFileDialog
 from PySide6.QtCore import QSize
 
-from gcode import widget
+from gcode import widget, style
 
 
 
 class GCodeWidget(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName('gcode_main')
 
         self.setWindowTitle('GCode - Тестовое задание Волков Алексей Сергеевич')
         self.setFixedSize(QSize(528, 346))
@@ -19,13 +22,12 @@ class GCodeWidget(QWidget):
         self.layout.addWidget(self.control_widget)
         self.layout.addWidget(self.show_block_code_widget)
 
-        self.hidden_filter_widget()
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.setSpacing(0)
 
-        self.setStyleSheet("""
-            #gcode_text_edit_line_number { 
-                background-color: #D9D9D9; 
-            }
-        """)
+        self.setStyleSheet(style.gcode.style)
+
+        self.control_widget.action_drive_button()
 
     def hidden_filter_widget(self) -> None:
         """Hidden GCodeFilterWidget"""
@@ -53,3 +55,6 @@ class GCodeWidget(QWidget):
             with open(filename, encoding='utf-8') as file:
                 self.show_block_code_widget.content_output(
                     file_content=file.readlines())
+
+            self.control_widget.set_file_name(
+                file_name=os.path.basename(filename))

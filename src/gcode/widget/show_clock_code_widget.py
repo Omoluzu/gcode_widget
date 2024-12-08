@@ -1,3 +1,4 @@
+from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QWidget, QTextEdit, QHBoxLayout, QStackedLayout
 
 from gcode import widget, text_edit, highlighter
@@ -7,9 +8,15 @@ from gcode import widget, text_edit, highlighter
 class GCodeShowBlockCodeWidget(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setAttribute(Qt.WA_StyledBackground)
+
+        self.setObjectName('gcode_widget_code')
 
         self.number_line_text_edit = text_edit.GCodeNumberLine()
+
         self.code_text_edit = QTextEdit()
+        self.code_text_edit.setObjectName('gcode_text_edit_code')
+
         self.filter_widget = widget.GCodeFilter()
 
         self.highlighter = highlighter.GCodeFilter(
@@ -23,6 +30,9 @@ class GCodeShowBlockCodeWidget(QWidget):
         self.layout = QHBoxLayout(self)
         self.layout.addWidget(self.number_line_text_edit)
         self.layout.addLayout(self.stacked_layout)
+
+        self.layout.setContentsMargins(5, 1, 0, 7)
+        self.layout.setSpacing(5)
 
         self.set_logical_vertical_scroll_bar()
 
@@ -49,8 +59,8 @@ class GCodeShowBlockCodeWidget(QWidget):
             file_content:
                 File contents
         """
-        self.code_text_edit.setPlainText(''.join(file_content))
-        self.number_line_text_edit.setPlainText(
+        self.code_text_edit.insertPlainText(''.join(file_content))
+        self.number_line_text_edit.insertPlainText(
             '\n'.join(map(str, (range(1, len(file_content) + 1)))))
 
     def filter_text(self, text: str) -> None:
@@ -61,4 +71,3 @@ class GCodeShowBlockCodeWidget(QWidget):
                 Search text
         """
         self.highlighter.filter_text(text)
-

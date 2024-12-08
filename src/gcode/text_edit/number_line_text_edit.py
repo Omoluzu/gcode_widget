@@ -9,6 +9,7 @@ class GCodeNumberLineTextEdit(QTextEdit):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setAlignment(Qt.AlignRight)
+        self.setReadOnly(True)
         self.setFixedSize(QSize(43, 289))
 
         self.setObjectName('gcode_text_edit_line_number')
