@@ -35,6 +35,15 @@ class GCodeWidget(QWidget):
         """Show GCodeFilterWidget"""
         self.show_block_code_widget.show_filter_widget()
 
+    def filter_text(self, text: str) -> None:
+        """Search text and highlight its text
+
+        Args:
+            text
+                Search text
+        """
+        self.show_block_code_widget.filter_text(text)
+
     def open_file(self) -> None:
         """Open GCode file"""
         filename, _ = QFileDialog.getOpenFileName(

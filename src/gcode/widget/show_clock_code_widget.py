@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QTextEdit, QHBoxLayout, QStackedLayout
 
-from gcode import widget, text_edit
+from gcode import widget, text_edit, highlighter
 
 
 
@@ -11,6 +11,9 @@ class GCodeShowBlockCodeWidget(QWidget):
         self.number_line_text_edit = text_edit.GCodeNumberLine()
         self.code_text_edit = QTextEdit()
         self.filter_widget = widget.GCodeFilter()
+
+        self.highlighter = highlighter.GCodeFilter(
+            self.code_text_edit.document())
 
         self.stacked_layout = QStackedLayout()
         self.stacked_layout.setStackingMode(QStackedLayout.StackAll)
@@ -33,7 +36,7 @@ class GCodeShowBlockCodeWidget(QWidget):
 
     def hidden_filter_widget(self) -> None:
         """Hidden GCodeFilterWidget"""
-        self.filter_widget.setVisible(False)
+        self.filter_widget.hidden_filter_widget()
 
     def show_filter_widget(self) -> None:
         """Show GCodeFilterWidget"""
@@ -49,3 +52,13 @@ class GCodeShowBlockCodeWidget(QWidget):
         self.code_text_edit.setPlainText(''.join(file_content))
         self.number_line_text_edit.setPlainText(
             '\n'.join(map(str, (range(1, len(file_content) + 1)))))
+
+    def filter_text(self, text: str) -> None:
+        """Search text and highlight its text
+
+        Args:
+            text
+                Search text
+        """
+        self.highlighter.filter_text(text)
+
