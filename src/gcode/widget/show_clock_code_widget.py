@@ -21,10 +21,21 @@ class GCodeShowBlockCodeWidget(QWidget):
         self.layout.addWidget(self.number_line_text_edit)
         self.layout.addLayout(self.stacked_layout)
 
-    def hidden_filter_widget(self):
+    def hidden_filter_widget(self) -> None:
         """Hidden GCodeFilterWidget"""
         self.filter_widget.setVisible(False)
 
-    def show_filter_widget(self):
+    def show_filter_widget(self) -> None:
         """Show GCodeFilterWidget"""
         self.filter_widget.setVisible(True)
+
+    def content_output(self, file_content: list[str]) -> None:
+        """Outputting content to text widgets
+
+        Args:
+            file_content:
+                File contents
+        """
+        self.code_text_edit.setPlainText(''.join(file_content))
+        self.number_line_text_edit.setPlainText(
+            '\n'.join(map(str, (range(1, len(file_content) + 1)))))

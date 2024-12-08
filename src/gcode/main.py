@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QFileDialog
 from PySide6.QtCore import QSize
 
 from gcode import widget
@@ -21,10 +21,20 @@ class GCodeWidget(QWidget):
 
         self.hidden_filter_widget()
 
-    def hidden_filter_widget(self):
+    def hidden_filter_widget(self) -> None:
         """Hidden GCodeFilterWidget"""
         self.show_block_code_widget.hidden_filter_widget()
 
-    def show_filter_widget(self):
+    def show_filter_widget(self) -> None:
         """Show GCodeFilterWidget"""
         self.show_block_code_widget.show_filter_widget()
+
+    def open_file(self) -> None:
+        """Open GCode file"""
+        filename, _ = QFileDialog.getOpenFileName(
+            self, "Выберите файл", "", "GCodeFile (*.txt)")
+
+        if filename:
+            with open(filename, encoding='utf-8') as file:
+                self.show_block_code_widget.content_output(
+                    file_content=file.readlines())
