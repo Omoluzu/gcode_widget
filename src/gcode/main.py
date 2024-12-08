@@ -21,6 +21,12 @@ class GCodeWidget(QWidget):
 
         self.hidden_filter_widget()
 
+        self.setStyleSheet("""
+            #gcode_text_edit_line_number { 
+                background-color: #D9D9D9; 
+            }
+        """)
+
     def hidden_filter_widget(self) -> None:
         """Hidden GCodeFilterWidget"""
         self.show_block_code_widget.hidden_filter_widget()
