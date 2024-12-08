@@ -18,3 +18,13 @@ class GCodeWidget(QWidget):
         self.layout = QVBoxLayout(self)
         self.layout.addWidget(self.control_widget)
         self.layout.addWidget(self.show_block_code_widget)
+
+        self.hidden_filter_widget()
+
+    def hidden_filter_widget(self):
+        """Hidden GCodeFilterWidget"""
+        self.show_block_code_widget.hidden_filter_widget()
+
+    def show_filter_widget(self):
+        """Show GCodeFilterWidget"""
+        self.show_block_code_widget.show_filter_widget()
